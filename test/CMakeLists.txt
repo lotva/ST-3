@@ -1,10 +1,12 @@
 include(FetchContent)
+find_package(Threads REQUIRED)
 
 FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
   GIT_TAG        release-1.12.0
 )
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 include_directories(${gtest_SOURCE_DIR}/include)
@@ -20,6 +22,7 @@ target_link_libraries(${PROJECT_NAME}.test
     ${PROJECT_NAME}
     gtest
     gmock
+    Threads::Threads
 )
 
 install(TARGETS ${PROJECT_NAME}.test
